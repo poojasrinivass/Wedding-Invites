@@ -19,7 +19,7 @@
             --font-body: 'Lato', 'Segoe UI', sans-serif;
         }
 
-        html { scroll-behavior: smooth; }
+        html { scroll-behavior: smooth; scroll-snap-type: y proximity; }
 
         body {
             font-family: var(--font-body);
@@ -50,6 +50,7 @@
             justify-content: center;
             overflow: hidden;
             background: var(--dark);
+            scroll-snap-align: start;
         }
 
         .hero-bg {
@@ -138,6 +139,37 @@
             animation: fadeUp 1s 1.2s ease forwards;
         }
 
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            opacity: 0;
+            animation: fadeUp 1s 1.5s ease forwards;
+        }
+        .hero-btn {
+            padding: 0.75rem 2rem;
+            border-radius: 50px;
+            font-family: var(--font-body);
+            font-size: 0.8rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        .hero-btn.primary {
+            background: var(--gold);
+            color: #fff;
+            border: 1px solid var(--gold);
+        }
+        .hero-btn.primary:hover { background: var(--gold-light); border-color: var(--gold-light); }
+        .hero-btn.secondary {
+            background: transparent;
+            color: #fff;
+            border: 1px solid rgba(255,255,255,0.4);
+        }
+        .hero-btn.secondary:hover { border-color: #fff; }
+
         .hero-scroll {
             opacity: 0;
             animation: fadeIn 1s 2s ease forwards;
@@ -172,6 +204,7 @@
             text-align: center;
             background: var(--cream);
             position: relative;
+            scroll-snap-align: start;
         }
 
         .details-section .logo-watermark {
@@ -298,6 +331,140 @@
             opacity: 0.4;
         }
 
+        /* ── TIMELINE ── */
+        .timeline-section {
+            position: relative;
+            background: var(--dark);
+            height: 100vh;
+            overflow: hidden;
+            scroll-snap-align: start;
+        }
+
+        .timeline-section h2 {
+            font-family: var(--font-display);
+            text-align: center;
+            font-weight: 600;
+            font-size: 2.5rem;
+            color: #fff;
+            padding: 4rem 2rem 2rem;
+            margin-bottom: 0;
+        }
+
+        .timeline-scroll {
+            height: calc(100vh - 8rem);
+            overflow-y: auto;
+            scroll-snap-type: y mandatory;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .timeline {
+            position: relative;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 2rem 0 60px;
+        }
+
+        /* Vertical line */
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 35px;
+            top: 0;
+            bottom: 0;
+            width: 1px;
+            background: linear-gradient(to bottom, transparent, var(--gold), var(--gold), transparent);
+        }
+
+        .timeline-item {
+            position: relative;
+            min-height: calc(100vh - 8rem);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 2rem 0;
+            scroll-snap-align: start;
+        }
+
+        /* Dot on the line */
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -32px;
+            top: 3rem;
+            width: 11px;
+            height: 11px;
+            border-radius: 50%;
+            background: var(--gold);
+            border: 2px solid var(--dark);
+            box-shadow: 0 0 0 3px rgba(184, 134, 11, 0.3);
+            z-index: 2;
+        }
+
+        .timeline-year {
+            font-family: var(--font-body);
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--gold-light);
+            margin-bottom: 0.4rem;
+        }
+
+        .timeline-saying {
+            font-family: var(--font-display);
+            font-style: italic;
+            font-size: 1.4rem;
+            font-weight: 400;
+            color: rgba(255,255,255,0.85);
+            margin-bottom: 1.2rem;
+            line-height: 1.5;
+        }
+
+        .timeline-photos {
+            display: flex;
+            gap: 0.6rem;
+            flex: 1;
+            min-height: 0;
+        }
+
+        .timeline-photos img {
+            width: 100%;
+            flex: 1;
+            object-fit: contain;
+            border-radius: 10px;
+            transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .timeline-photos .photo-wrapper {
+            flex: 1;
+            min-width: 0;
+        }
+        .timeline-photos .photo-wrapper img {
+            width: 100%;
+        }
+        .photo-caption {
+            display: block;
+            color: rgba(255,255,255,0.5);
+            font-family: var(--font-body);
+            font-size: 0.7rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            margin-top: 0.5rem;
+        }
+        .timeline-photos img:hover {
+            transform: scale(1.03);
+        }
+
+        @media (max-width: 600px) {
+            .timeline-photos {
+                flex-direction: column;
+            }
+            .timeline-photos img {
+                width: 100%;
+                flex: none;
+            }
+        }
+
         /* ── RSVP Section ── */
         .rsvp-section {
             padding: 5rem 2rem 6rem;
@@ -327,7 +494,7 @@
         }
         .rsvp-section .section-sub {
             text-align: center;
-            color: rgba(255,255,255,0.45);
+            color: rgba(255,255,255,0.5);
             margin-bottom: 3rem;
             font-size: 0.85rem;
             letter-spacing: 0.15em;
@@ -337,11 +504,11 @@
         /* Guest card */
         .guest-card {
             background: rgba(255,255,255,0.06);
-            border: 1px solid rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.1);
             border-radius: 16px;
             padding: 2rem;
             margin-bottom: 1rem;
-            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 16px rgba(0,0,0,0.2);
             animation: cardIn 0.3s ease;
         }
         @keyframes cardIn {
@@ -363,12 +530,12 @@
         }
         .btn-remove {
             background: none;
-            border: 1px solid rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.2);
             border-radius: 50%;
             width: 30px; height: 30px;
             font-size: 1.1rem;
             cursor: pointer;
-            color: rgba(255,255,255,0.35);
+            color: rgba(255,255,255,0.4);
             display: flex; align-items: center; justify-content: center;
             transition: all 0.2s;
         }
@@ -387,35 +554,35 @@
             font-size: 0.72rem;
             text-transform: uppercase;
             letter-spacing: 0.12em;
-            color: rgba(255,255,255,0.45);
+            color: rgba(255,255,255,0.55);
             margin-bottom: 0.4rem;
             font-weight: 700;
         }
-        .form-group label .req { color: var(--gold-light); }
+        .form-group label .req { color: #e74c3c; }
 
         .form-group input,
         .form-group select,
         .form-group textarea {
             padding: 0.7rem 0.9rem;
-            border: 1px solid rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.15);
             border-radius: 8px;
             font-family: var(--font-body);
             font-size: 0.95rem;
             transition: border 0.3s, background 0.3s;
-            background: rgba(255,255,255,0.04);
+            background: rgba(255,255,255,0.07);
             color: #fff;
         }
         .form-group input::placeholder,
-        .form-group textarea::placeholder { color: rgba(255,255,255,0.25); }
+        .form-group textarea::placeholder { color: rgba(255,255,255,0.3); }
 
-        .form-group select option { background: #2c2c2c; color: #fff; }
+        .form-group select option { background: var(--dark); color: #fff; }
 
         .form-group input:focus,
         .form-group select:focus,
         .form-group textarea:focus {
             outline: none;
             border-color: var(--gold);
-            background: rgba(255,255,255,0.07);
+            background: rgba(255,255,255,0.1);
         }
         .form-group textarea { resize: vertical; min-height: 60px; }
 
@@ -426,12 +593,12 @@
             gap: 0.5rem;
             width: 100%;
             padding: 0.85rem;
-            border: 1px dashed rgba(255,255,255,0.15);
+            border: 1px dashed rgba(255,255,255,0.2);
             border-radius: 12px;
             background: transparent;
             font-family: var(--font-body);
             font-size: 0.9rem;
-            color: rgba(255,255,255,0.35);
+            color: rgba(255,255,255,0.4);
             cursor: pointer;
             margin-bottom: 2rem;
             transition: all 0.3s;
@@ -469,7 +636,7 @@
             margin-bottom: 1rem;
         }
         .footer p {
-            color: rgba(255,255,255,0.2);
+            color: rgba(255,255,255,0.25);
             font-size: 0.8rem;
             letter-spacing: 0.1em;
         }
@@ -522,6 +689,10 @@
         <p class="hero-pre">Wedding Reception</p>
         <h1 class="hero-names">Pooja <span class="amp">&</span> Dhanush</h1>
         <p class="hero-date">Bramleigh Estate &middot; Warrandyte &middot; Melbourne</p>
+        <div class="hero-buttons">
+            <a href="#rsvp" class="hero-btn primary">RSVP</a>
+            <a href="#our-story" class="hero-btn secondary">Our Story</a>
+        </div>
     </div>
     <div class="hero-scroll">
         <a href="#details">
@@ -556,14 +727,14 @@
             </div>
             <div class="event-detail-row">
                 <span class="event-detail-label">Location</span>
-                <span class="event-detail-value">Warrandyte, Melbourne</span>
+                <span class="event-detail-value"><a href="https://maps.app.goo.gl/jPSmtpfnm2z7xHxQ7" target="_blank" rel="noopener" style="color: var(--dark); text-decoration: none; border-bottom: 1px solid var(--gold-light);">Warrandyte, Melbourne</a></span>
             </div>
         </div>
     </div>
 </section>
 
 <!-- ════════ PHOTO GALLERY ════════ -->
-<section class="gallery">
+<!-- <section class="gallery">
     <div class="gallery-grid">
         <div class="gallery-item tall reveal">
             <img src="../images/561410a7-9411-4c7e-9cf5-65295282e471.jpg" alt="Pooja & Dhanush">
@@ -582,10 +753,10 @@
             <div class="overlay"></div>
         </div>
     </div>
-</section>
+</section> -->
 
 <!-- ════════ MESSAGE ════════ -->
-<section class="message-strip">
+<!-- <section class="message-strip">
     <div class="reveal">
         <img src="../images/logoBlack.png" alt="" class="logo-accent">
         <blockquote>
@@ -594,13 +765,62 @@
         </blockquote>
         <div class="divider"></div>
     </div>
-</section>
+</section> -->
 
-<!-- ════════ RSVP ════════ -->
+<!-- ════════ TIMELINE ════════ -->
+<section class="timeline-section" id="our-story">
+    <h2 class="reveal">Our Story</h2>
+    <div class="timeline-scroll">
+    <div class="timeline">
+
+        <div class="timeline-item reveal">
+            <div class="timeline-year">THE BEGINNING</div>
+            <div class="timeline-saying">Born a house apart, we were each other's first best friend</div>
+            <div class="timeline-photos">
+                <img src="../images/WhatsApp Image 2026-04-13 at 3.32.50 AM.jpeg" alt="Baby photos">
+                <!-- <img src="../images/WhatsApp Image 2026-04-12 at 10.57.33 PM.jpeg" alt="Baby photos"> -->
+            </div>
+        </div>
+
+        <div class="timeline-item reveal">
+            <div class="timeline-year">RECONNECTION</div>
+            <div class="timeline-saying">After years apart, we were brought together by the truest expression of love, the 50th anniversary of Appa/Uncle and Amma/Aunty</div>
+            <div class="timeline-photos">
+                <img src="../images/Reconnection1.jpg" alt="Pooja & Dhanush">
+            </div>
+        </div>
+
+        <div class="timeline-item reveal">
+            <div class="timeline-year">FALLING IN LOVE</div>
+            <div class="timeline-saying">Despite living worlds apart, we fell for each other. Brought together by our shared values of adventure, family, and kindness</div>
+            <div class="timeline-photos">
+                <div class="photo-wrapper">
+                    <img src="../images/fallinginlove3.jpg" alt="Pooja & Dhanush">
+                    <span class="photo-caption">Yosemite National Park</span>
+                </div>
+                <!-- <img src="../images/e546d417-9bc6-4025-86d7-0b2d9b642aa9.jpg" alt="Pooja & Dhanush"> -->
+            </div>
+        </div>
+
+        <div class="timeline-item reveal">
+            <div class="timeline-year">AND NOW...</div>
+            <div class="timeline-photos" style="aspect-ratio: 21/9;">
+                <div style="flex: 3; overflow: hidden; border-radius: 10px;">
+                    <img src="../images/andnow2.jpg" alt="Pooja & Dhanush" style="width: 100%; height: 100%; object-fit: cover;">
+                </div>
+                <div style="flex: 2; overflow: hidden; border-radius: 10px;">
+                    <img src="../images/andnow.jpg" alt="Pooja & Dhanush" style="width: 100%; height: 100%; object-fit: cover;">
+                </div>
+            </div>
+        </div>
+
+    </div>
+    </div>
+</section>
 <section class="rsvp-section" id="rsvp">
     <div class="rsvp-inner">
         <h2 class="reveal">RSVP</h2>
-        <p class="section-sub reveal">Kindly respond by 30 June 2025</p>
+        <!-- <p class="section-sub reveal">Kindly respond by 30 June 2025</p> -->
 
         <form id="rsvpForm" onsubmit="return handleSubmit(event)">
             <div id="guestContainer"></div>
@@ -632,6 +852,17 @@ const observer = new IntersectionObserver((entries) => {
 }, { threshold: 0.15 });
 
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// ── Timeline nested scroll observer ──
+const timelineScroll = document.querySelector('.timeline-scroll');
+if (timelineScroll) {
+    const tlObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) entry.target.classList.add('visible');
+        });
+    }, { root: timelineScroll, threshold: 0.15 });
+    timelineScroll.querySelectorAll('.reveal').forEach(el => tlObserver.observe(el));
+}
 
 // ── Hero slow zoom on load ──
 window.addEventListener('load', () => {
